@@ -19,6 +19,7 @@
 		94D25B5E2958734200405AD0 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B5D2958734200405AD0 /* Tests.swift */; };
 		94D25B682958734200405AD0 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B672958734200405AD0 /* UITests.swift */; };
 		94D25B6A2958734200405AD0 /* UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B692958734200405AD0 /* UITestsLaunchTests.swift */; };
+		94F9C548295C7AA100B05F70 /* ZoomableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F9C547295C7AA100B05F70 /* ZoomableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		94D25B632958734200405AD0 /* ios-photo-editorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-photo-editorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D25B672958734200405AD0 /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
 		94D25B692958734200405AD0 /* UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		94F9C547295C7AA100B05F70 /* ZoomableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				94D25B522958734100405AD0 /* ios_photo_editor.xcdatamodeld */,
 				94D25B4D2958734100405AD0 /* Preview Content */,
 				94632552295B763500F862F9 /* EditorView.swift */,
+				94F9C547295C7AA100B05F70 /* ZoomableView.swift */,
 			);
 			path = "ios-photo-editor";
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94D25B512958734100405AD0 /* Persistence.swift in Sources */,
+				94F9C548295C7AA100B05F70 /* ZoomableView.swift in Sources */,
 				94D25B4A2958733F00405AD0 /* ContentView.swift in Sources */,
 				94D25B482958733F00405AD0 /* App.swift in Sources */,
 				94D25B542958734100405AD0 /* ios_photo_editor.xcdatamodeld in Sources */,

@@ -16,14 +16,15 @@ struct EditorView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Image("ExampleMain2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipped()
-                    
+            Group {
+//                ZoomableScrollView {
+                    Image("ExampleMain1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
+//                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxHeight: .infinity)
             .ignoresSafeArea()
             .overlay {
                 HStack {
@@ -61,9 +62,9 @@ struct EditorView: View {
                                 .frame(width: 1000, height: 100)
                         }
                         Picker("", selection: $toolType) {
-                            Text("Tool1")
+                            Text("Draw")
                                 .tag(0)
-                            Text("Tool2")
+                            Text("Text")
                                 .tag(1)
                         }
                         .pickerStyle(.segmented)
@@ -100,14 +101,14 @@ struct EditorView: View {
                         print("Undo action")
                     } label: {
                         Image(systemName: "arrow.uturn.backward")
-                            .foregroundColor(.yellow)
+                            .foregroundColor(.white)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Clear all") {
                         print("Clear all action")
                     }
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.white)
                 }
             }
         }
@@ -165,7 +166,6 @@ struct BackdropBlurView: View {
     
     let radius: CGFloat
     
-//    @ViewBuilder
     var body: some View {
         BackdropView().blur(radius: radius)
     }
@@ -173,19 +173,6 @@ struct BackdropBlurView: View {
 }
 
 // MARK: - Tools
-
-//struct ToolsGroupView: View {
-//    var body: some View {
-//        HStack {
-//            PenToolView()
-//            BrushToolView()
-//            NeonToolView()
-//            PencilToolView()
-//            LassoToolView()
-//            EraserToolView()
-//        }
-//    }
-//}
 
 protocol ToolView: View {
     
