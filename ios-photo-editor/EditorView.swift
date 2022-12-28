@@ -47,11 +47,18 @@ struct EditorView: View {
                                 .padding(.trailing)
                             NeonToolView()
                                 .padding(.trailing)
+                                .padding(.top, -45)
                             PencilToolView()
                                 .padding(.trailing)
                             LassoToolView()
                                 .padding(.trailing)
                             EraserToolView()
+                        }
+                        .padding(.bottom, -15)
+                        .padding(.top, 35)
+                        .mask {
+                            Rectangle()
+                                .frame(width: 1000, height: 100)
                         }
                         Picker("", selection: $toolType) {
                             Text("Tool1")
@@ -61,17 +68,9 @@ struct EditorView: View {
                         }
                         .pickerStyle(.segmented)
                         .background {
-                            Rectangle()
-                                .fill(.black)
-                                .background(Blur(style: .systemChromeMaterial))
-//                                .ignoresSafeArea()
-//                                .frame(maxWidth: .infinity, idealHeight: 30)
-//                                .padding(.trailing, -11)
-//                                .padding(.leading, -11)
-                                .frame(height: 30)
-//                                .opacity(0.5).blur(radius: 8)
-                                .shadow(color: .black.opacity(0.5), radius: 7, y: -10).blur(radius: 8)
-                                .shadow(color: .black.opacity(0.5), radius: 7, y: -10).blur(radius: 8)
+                            BackdropBlurView(radius: 3)
+                                .frame(height: 35)
+                                .padding(.top, -5)
                         }
                         .padding(.top, -20)
                         .padding(.trailing, 20)
@@ -141,6 +140,36 @@ struct Blur: UIViewRepresentable {
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
         uiView.effect = UIBlurEffect(style: style)
     }
+}
+
+/// A View which content reflects all behind it
+struct BackdropView: UIViewRepresentable {
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let view = UIVisualEffectView()
+        let blur = UIBlurEffect(style: .extraLight)
+        let animator = UIViewPropertyAnimator()
+        animator.addAnimations { view.effect = blur }
+        animator.fractionComplete = 0
+        animator.stopAnimation(true)
+        animator.finishAnimation(at: .start)
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) { }
+    
+}
+
+/// A transparent View that blurs its background
+struct BackdropBlurView: View {
+    
+    let radius: CGFloat
+    
+//    @ViewBuilder
+    var body: some View {
+        BackdropView().blur(radius: radius)
+    }
+    
 }
 
 // MARK: - Tools
