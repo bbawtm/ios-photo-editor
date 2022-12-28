@@ -2,10 +2,11 @@
 //  ZoomableView.swift
 //  ios-photo-editor
 //
-//  Created by Вадим Попов on 28.12.2022.
+//  Created by Vadim Popov on 28.12.2022.
 //
 
 import SwiftUI
+
 
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
   private var content: Content

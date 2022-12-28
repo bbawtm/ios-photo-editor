@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-// MARK: - Main screen
 
 struct EditorView: View {
     
     @State private var bgColor = Color.white
     @State private var toolType = 0
+    @State private var selectedDrawTool: Int? = nil
     
     var body: some View {
         NavigationView {
             Group {
-//                ZoomableScrollView {
-                    Image("ExampleMain1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .clipped()
-//                }
+                Image("ExampleMain1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipped()
             }
             .frame(maxHeight: .infinity)
             .ignoresSafeArea()
@@ -34,26 +32,33 @@ struct EditorView: View {
                             .labelsHidden()
                             .frame(width: 30)
                             .padding(.bottom, 10.0)
-                        Image("cancelToolBar")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
+                        Button {
+                            // Cancel action
+                            selectedDrawTool = nil
+                        } label: {
+                            Image("cancelToolBar")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30)
+                                
+                        }
+                        .opacity(selectedDrawTool != nil ? 1 : 0.4)
+                        .disabled(selectedDrawTool == nil)
                     }
                     VStack {
                         Spacer()
                         HStack {
-                            PenToolView()
+                            PenToolView(selectedDrawTool: $selectedDrawTool)
                                 .padding(.trailing)
-                            BrushToolView()
+                            BrushToolView(selectedDrawTool: $selectedDrawTool)
                                 .padding(.trailing)
-                            NeonToolView()
+                            NeonToolView(selectedDrawTool: $selectedDrawTool)
                                 .padding(.trailing)
-                                .padding(.top, -45)
-                            PencilToolView()
+                            PencilToolView(selectedDrawTool: $selectedDrawTool)
                                 .padding(.trailing)
-                            LassoToolView()
+                            LassoToolView(selectedDrawTool: $selectedDrawTool)
                                 .padding(.trailing)
-                            EraserToolView()
+                            EraserToolView(selectedDrawTool: $selectedDrawTool)
                         }
                         .padding(.bottom, -15)
                         .padding(.top, 35)
@@ -79,17 +84,25 @@ struct EditorView: View {
                     }
                     VStack {
                         Spacer()
-                        Image("addToolBar")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
-                            .background(Blur(style: .systemUltraThinMaterial))
-                            .cornerRadius(50)
-                            .padding(.bottom, 10.0)
-                        Image("downloadToolBar")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
+                        Button {
+                            print("Show tool info action")
+                        } label: {
+                            Image("addToolBar")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30)
+                                .background(Blur(style: .systemUltraThinMaterial))
+                                .cornerRadius(50)
+                                .padding(.bottom, 10.0)
+                        }
+                        Button {
+                            print("Save image action")
+                        } label: {
+                            Image("downloadToolBar")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30)
+                        }
                     }
                 }
                 .padding(.leading, 8)
@@ -143,7 +156,6 @@ struct Blur: UIViewRepresentable {
     }
 }
 
-/// A View which content reflects all behind it
 struct BackdropView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UIVisualEffectView {
@@ -161,7 +173,6 @@ struct BackdropView: UIViewRepresentable {
     
 }
 
-/// A transparent View that blurs its background
 struct BackdropBlurView: View {
     
     let radius: CGFloat
@@ -170,112 +181,4 @@ struct BackdropBlurView: View {
         BackdropView().blur(radius: radius)
     }
     
-}
-
-// MARK: - Tools
-
-protocol ToolView: View {
-    
-}
-
-struct PenToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("penBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-            Image("penTip")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-                .colorMultiply(.cyan)
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(.cyan)
-                .frame(width: 20, height: 20)
-                .offset (x: 0, y: 6)
-        }
-    }
-}
-
-struct BrushToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("brushBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-            Image("brushTip")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-                .colorMultiply(.cyan)
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(.cyan)
-                .frame(width: 20, height: 20)
-                .offset (x: 0, y: -5)
-        }
-    }
-}
-
-struct NeonToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("neonBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-            Image("neonTip")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-                .colorMultiply(.cyan)
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(.cyan)
-                .frame(width: 20, height: 20)
-                .offset (x: 0, y: -5)
-        }
-    }
-}
-
-struct PencilToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("pencilBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-            Image("pencilTip")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-                .colorMultiply(.cyan)
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(.cyan)
-                .frame(width: 20, height: 20)
-                .offset (x: 0, y: 0)
-        }
-    }
-}
-
-struct LassoToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("lassoBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-        }
-    }
-}
-
-struct EraserToolView: ToolView {
-    var body: some View {
-        ZStack {
-            Image("objectEraserBase")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-        }
-    }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		940DAFC929587E3E00903DAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC729587E3E00903DAA /* README.md */; };
 		940DAFCA29587E3E00903DAA /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC829587E3E00903DAA /* LICENSE.txt */; };
+		945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F47F7295CBA3B00D3D73D /* ToolViews.swift */; };
 		94632553295B763500F862F9 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94632552295B763500F862F9 /* EditorView.swift */; };
 		94D25B482958733F00405AD0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B472958733F00405AD0 /* App.swift */; };
 		94D25B4A2958733F00405AD0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B492958733F00405AD0 /* ContentView.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		940DAFC729587E3E00903DAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		940DAFC829587E3E00903DAA /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		945F47F7295CBA3B00D3D73D /* ToolViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViews.swift; sourceTree = "<group>"; };
 		94632552295B763500F862F9 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		94D25B442958733F00405AD0 /* ios-photo-editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-photo-editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D25B472958733F00405AD0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -83,6 +85,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		945F47F6295CBA0B00D3D73D /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				94632552295B763500F862F9 /* EditorView.swift */,
+				945F47F7295CBA3B00D3D73D /* ToolViews.swift */,
+				94F9C547295C7AA100B05F70 /* ZoomableView.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
 		94D25B3B2958733F00405AD0 = {
 			isa = PBXGroup;
 			children = (
@@ -108,14 +120,13 @@
 		94D25B462958733F00405AD0 /* ios-photo-editor */ = {
 			isa = PBXGroup;
 			children = (
+				945F47F6295CBA0B00D3D73D /* MainScreen */,
 				94D25B472958733F00405AD0 /* App.swift */,
 				94D25B492958733F00405AD0 /* ContentView.swift */,
-				94D25B4B2958734100405AD0 /* Assets.xcassets */,
 				94D25B502958734100405AD0 /* Persistence.swift */,
-				94D25B522958734100405AD0 /* ios_photo_editor.xcdatamodeld */,
 				94D25B4D2958734100405AD0 /* Preview Content */,
-				94632552295B763500F862F9 /* EditorView.swift */,
-				94F9C547295C7AA100B05F70 /* ZoomableView.swift */,
+				94D25B4B2958734100405AD0 /* Assets.xcassets */,
+				94D25B522958734100405AD0 /* ios_photo_editor.xcdatamodeld */,
 			);
 			path = "ios-photo-editor";
 			sourceTree = "<group>";
@@ -277,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */,
 				94D25B512958734100405AD0 /* Persistence.swift in Sources */,
 				94F9C548295C7AA100B05F70 /* ZoomableView.swift in Sources */,
 				94D25B4A2958733F00405AD0 /* ContentView.swift in Sources */,
