@@ -8,6 +8,15 @@
 import SwiftUI
 
 
+struct ZoomableImageView: View {
+    var body: some View {
+        Image("ExampleMain3")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipped()
+    }
+}
+
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
   private var content: Content
 

@@ -8,10 +8,54 @@
 import SwiftUI
 
 
+// MARK: - common views
+
+struct AllToolsView: View {
+    @Binding var selectedDrawTool: Int?
+    
+    var body: some View {
+        PenToolView(selectedDrawTool: $selectedDrawTool)
+            .padding(.trailing)
+        BrushToolView(selectedDrawTool: $selectedDrawTool)
+            .padding(.trailing)
+        NeonToolView(selectedDrawTool: $selectedDrawTool)
+            .padding(.trailing)
+        PencilToolView(selectedDrawTool: $selectedDrawTool)
+            .padding(.trailing)
+        LassoToolView(selectedDrawTool: $selectedDrawTool)
+            .padding(.trailing)
+        EraserToolView(selectedDrawTool: $selectedDrawTool)
+    }
+}
+
+struct TextToolView: View {
+    var body: some View {
+        Button {
+            print("Add text on screen")
+        } label: {
+            Text("Add text")
+        }
+        .foregroundColor(.white)
+        .padding(.leading)
+        .padding(.trailing)
+        .padding(.top, 8)
+        .padding(.bottom, 8)
+        .overlay {
+            RoundedRectangle(cornerRadius: 100)
+                .stroke(.white, lineWidth: 1)
+        }
+        .cornerRadius(100)
+    }
+}
+
+enum ToolType {
+    case draw, text
+}
+
+// MARK: - each tool view
+
 protocol ToolView: View {
-    
     var selectedDrawTool: Int? { get set }
-    
 }
 
 struct PenToolView: ToolView {

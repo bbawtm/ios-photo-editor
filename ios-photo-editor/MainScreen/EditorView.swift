@@ -11,17 +11,12 @@ import SwiftUI
 struct EditorView: View {
     
     @State private var bgColor = Color.white
-    @State private var toolType = 0
-    @State private var selectedDrawTool: Int? = nil
+    @State private var toolType: ToolType = .draw
+    @State private var selectedDrawTool: Int?
     
     var body: some View {
         NavigationView {
-            Group {
-                Image("ExampleMain1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipped()
-            }
+            ZoomableImageView()
             .frame(maxHeight: .infinity)
             .ignoresSafeArea()
             .overlay {
@@ -42,23 +37,17 @@ struct EditorView: View {
                                 .frame(width: 30)
                                 
                         }
-                        .opacity(selectedDrawTool != nil ? 1 : 0.4)
-                        .disabled(selectedDrawTool == nil)
+                        .opacity(toolType == .draw && selectedDrawTool != nil ? 1 : 0.4)
+                        .disabled(toolType != .draw || selectedDrawTool == nil)
                     }
                     VStack {
                         Spacer()
                         HStack {
-                            PenToolView(selectedDrawTool: $selectedDrawTool)
-                                .padding(.trailing)
-                            BrushToolView(selectedDrawTool: $selectedDrawTool)
-                                .padding(.trailing)
-                            NeonToolView(selectedDrawTool: $selectedDrawTool)
-                                .padding(.trailing)
-                            PencilToolView(selectedDrawTool: $selectedDrawTool)
-                                .padding(.trailing)
-                            LassoToolView(selectedDrawTool: $selectedDrawTool)
-                                .padding(.trailing)
-                            EraserToolView(selectedDrawTool: $selectedDrawTool)
+                            AllToolsView(selectedDrawTool: $selectedDrawTool)
+                                .visibility(toolType == .draw)
+                            TextToolView()
+                                .visibility(toolType == .text)
+                                .padding(.bottom, 50)
                         }
                         .padding(.bottom, -15)
                         .padding(.top, 35)
@@ -68,9 +57,9 @@ struct EditorView: View {
                         }
                         Picker("", selection: $toolType) {
                             Text("Draw")
-                                .tag(0)
+                                .tag(ToolType.draw)
                             Text("Text")
-                                .tag(1)
+                                .tag(ToolType.text)
                         }
                         .pickerStyle(.segmented)
                         .background {
@@ -137,12 +126,21 @@ struct EditorView_Previews: PreviewProvider {
 }
 
 extension View {
-     public func addCircle(_ content: Color, width: CGFloat = 1, cornerRadius: CGFloat) -> some View {
-         let roundedRect = Circle()
-         return clipShape(roundedRect)
-              .overlay(roundedRect.strokeBorder(content, lineWidth: width))
-     }
- }
+    
+    public func addCircle(_ content: Color, width: CGFloat = 1, cornerRadius: CGFloat) -> some View {
+        let roundedRect = Circle()
+        return clipShape(roundedRect)
+            .overlay(roundedRect.strokeBorder(content, lineWidth: width))
+    }
+    
+    @ViewBuilder
+    func visibility(_ visibility: Bool) -> some View {
+        if visibility {
+            self
+        }
+    }
+    
+}
 
 struct Blur: UIViewRepresentable {
     var style: UIBlurEffect.Style = .systemMaterial
