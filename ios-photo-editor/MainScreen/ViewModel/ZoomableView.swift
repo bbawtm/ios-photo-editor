@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ZoomableImageView: View {
     var body: some View {
-        Image("ExampleMain3")
+        Image("ExampleMain1")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .clipped()

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		940DAFC929587E3E00903DAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC729587E3E00903DAA /* README.md */; };
 		940DAFCA29587E3E00903DAA /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC829587E3E00903DAA /* LICENSE.txt */; };
+		9453572C2966EA3200EF472E /* DrawCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453572B2966EA3200EF472E /* DrawCanvas.swift */; };
 		945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F47F7295CBA3B00D3D73D /* ToolViews.swift */; };
 		94632553295B763500F862F9 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94632552295B763500F862F9 /* EditorView.swift */; };
 		94D25B482958733F00405AD0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B472958733F00405AD0 /* App.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		940DAFC729587E3E00903DAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		940DAFC829587E3E00903DAA /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		9453572B2966EA3200EF472E /* DrawCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCanvas.swift; sourceTree = "<group>"; };
 		945F47F7295CBA3B00D3D73D /* ToolViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViews.swift; sourceTree = "<group>"; };
 		94632552295B763500F862F9 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		94D25B442958733F00405AD0 /* ios-photo-editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-photo-editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,12 +87,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9453572A2966EA1000EF472E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9453572B2966EA3200EF472E /* DrawCanvas.swift */,
+				94F9C547295C7AA100B05F70 /* ZoomableView.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		945F47F6295CBA0B00D3D73D /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				9453572A2966EA1000EF472E /* ViewModel */,
 				94632552295B763500F862F9 /* EditorView.swift */,
 				945F47F7295CBA3B00D3D73D /* ToolViews.swift */,
-				94F9C547295C7AA100B05F70 /* ZoomableView.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -289,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */,
+				9453572C2966EA3200EF472E /* DrawCanvas.swift in Sources */,
 				94D25B512958734100405AD0 /* Persistence.swift in Sources */,
 				94F9C548295C7AA100B05F70 /* ZoomableView.swift in Sources */,
 				94D25B4A2958733F00405AD0 /* ContentView.swift in Sources */,
