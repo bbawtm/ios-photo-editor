@@ -17,9 +17,11 @@ struct DrawCanvas: View {
     
     @Binding var lines: [Line]
     @Binding var selectedColor: Color
+    @Binding var canvasSize: CGSize?
     
     var body: some View {
         Canvas { context, size in
+            self.canvasSize = size
             for line in self.lines {
                 var path = Path()
                 path.addLines(line.points)

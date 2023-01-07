@@ -13,16 +13,19 @@ struct EditorView: View {
     @State private var pickedColor = Color.white
     @State private var toolType: ToolType = .draw
     @State private var selectedDrawTool: Int?
-    @State private var drawnLines: [Line] = []  // TODO: move to DrawCanvas
+    @State private var canvasSize: CGSize?
+    @State private var drawnLines: [Line] = []
     
     var body: some View {
         NavigationView {
-            ZoomableImageView()
-                .overlay {
-                    DrawCanvas(lines: $drawnLines, selectedColor: $pickedColor)
-                }
-                .frame(maxHeight: .infinity)
-                .ignoresSafeArea()
+            Group {
+                ZoomableImageView()
+                    .overlay {
+                        DrawCanvas(lines: $drawnLines, selectedColor: $pickedColor, canvasSize: $canvasSize)
+                    }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
                 .overlay {
                     HStack {
                         VStack {
@@ -89,7 +92,8 @@ struct EditorView: View {
                                     .padding(.bottom, 10.0)
                             }
                             Button {
-                                print("Save image action")
+                                // Save image action
+                                saveImage()
                             } label: {
                                 Image("downloadToolBar")
                                     .resizable()
@@ -122,6 +126,34 @@ struct EditorView: View {
         }
     }
     
+    @MainActor
+    private func saveImage() {
+        guard let originUIImage = UIImage(named: "ExampleMain1") else { return }
+        let originSize = originUIImage.size
+        
+        let drawnLines = self.drawnLines                                                   // bug if delete this line
+        let scale = 1.0 * originSize.width / (self.canvasSize?.width ?? originSize.width)  // bug if delete this line
+        
+        let canvasImage = Image(size: originSize) { context in
+            for line in drawnLines {
+                var path = Path()
+                let affineStretched = line.points.map { element in
+                    element.applying(CGAffineTransform(scaleX: scale, y: scale))
+                }
+                path.addLines(affineStretched)
+                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: 5 * scale, lineCap: .round, lineJoin: .round))
+            }
+        }
+        let combinedView = ZStack {
+            Image(uiImage: originUIImage)
+            canvasImage
+        }
+        let rendererCombined = ImageRenderer(content: combinedView)
+        guard let resultUiImage = rendererCombined.uiImage else { return }
+        
+        UIImageWriteToSavedPhotosAlbum(resultUiImage, nil, nil, nil)
+    }
+    
 }
 
 struct EditorView_Previews: PreviewProvider {
@@ -143,21 +175,6 @@ extension View {
     func visibility(_ visibility: Bool) -> some View {
         if visibility {
             self
-        }
-    }
-    
-    func snapshot() -> UIImage {
-        let controller = UIHostingController(rootView: self)
-        let view = controller.view
-
-        let targetSize = controller.view.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
-        view?.backgroundColor = .clear
-
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-        
-        return renderer.image { _ in
-            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
     }
     

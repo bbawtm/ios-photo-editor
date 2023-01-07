@@ -45,6 +45,7 @@
 		940DAFC729587E3E00903DAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		940DAFC829587E3E00903DAA /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		9453572B2966EA3200EF472E /* DrawCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCanvas.swift; sourceTree = "<group>"; };
+		9453572D2969BCAB00EF472E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		945F47F7295CBA3B00D3D73D /* ToolViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViews.swift; sourceTree = "<group>"; };
 		94632552295B763500F862F9 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		94D25B442958733F00405AD0 /* ios-photo-editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-photo-editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +132,7 @@
 		94D25B462958733F00405AD0 /* ios-photo-editor */ = {
 			isa = PBXGroup;
 			children = (
+				9453572D2969BCAB00EF472E /* Info.plist */,
 				945F47F6295CBA0B00D3D73D /* MainScreen */,
 				94D25B472958733F00405AD0 /* App.swift */,
 				94D25B492958733F00405AD0 /* ContentView.swift */,
@@ -169,11 +171,22 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		9453572E2969BCD900EF472E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		94D25B432958733F00405AD0 /* ios-photo-editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94D25B6D2958734200405AD0 /* Build configuration list for PBXNativeTarget "ios-photo-editor" */;
 			buildPhases = (
+				9453572E2969BCD900EF472E /* Headers */,
 				94D25B402958733F00405AD0 /* Sources */,
 				94D25B412958733F00405AD0 /* Frameworks */,
 				94D25B422958733F00405AD0 /* Resources */,
@@ -468,15 +481,17 @@
 				DEVELOPMENT_TEAM = Y27S32PB7A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-photo-editor/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Photo Editor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In case you want to save your images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -501,15 +516,17 @@
 				DEVELOPMENT_TEAM = Y27S32PB7A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-photo-editor/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Photo Editor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In case you want to save your images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
