@@ -11,16 +11,19 @@ import SwiftUI
 // MARK: - common views
 
 struct AllToolsView: View {
+    
+    @Binding var toolType: ToolType
     @Binding var selectedDrawTool: Int?
+    @ObservedObject var colorSet: ColorSet
     
     var body: some View {
-        PenToolView(selectedDrawTool: $selectedDrawTool)
+        PenToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.pen)
             .padding(.trailing)
-        BrushToolView(selectedDrawTool: $selectedDrawTool)
+        BrushToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.brush)
             .padding(.trailing)
-        NeonToolView(selectedDrawTool: $selectedDrawTool)
+        NeonToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.neon)
             .padding(.trailing)
-        PencilToolView(selectedDrawTool: $selectedDrawTool)
+        PencilToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.pencil)
             .padding(.trailing)
         LassoToolView(selectedDrawTool: $selectedDrawTool)
             .padding(.trailing)
@@ -52,6 +55,24 @@ enum ToolType {
     case draw, text
 }
 
+class ColorSet: ObservableObject {
+    
+    @Published var pen: Color
+    @Published var brush: Color
+    @Published var neon: Color
+    @Published var pencil: Color
+    @Published var text: Color
+    
+    init(default c: Color) {
+        self.pen = c
+        self.brush = c
+        self.neon = c
+        self.pencil = c
+        self.text = .black
+    }
+    
+}
+
 // MARK: - each tool view
 
 protocol ToolView: View {
@@ -60,6 +81,7 @@ protocol ToolView: View {
 
 struct PenToolView: ToolView {
     @Binding var selectedDrawTool: Int?
+    @Binding var selectedColor: Color
     
     var body: some View {
         Button {
@@ -74,9 +96,9 @@ struct PenToolView: ToolView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24)
-                    .colorMultiply(.cyan)
+                    .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
-                    .fill(.cyan)
+                    .fill(selectedColor)
                     .frame(width: 20, height: 20)
                     .offset (x: 0, y: 6)
             }
@@ -87,6 +109,7 @@ struct PenToolView: ToolView {
 
 struct BrushToolView: ToolView {
     @Binding var selectedDrawTool: Int?
+    @Binding var selectedColor: Color
     
     var body: some View {
         Button {
@@ -101,9 +124,9 @@ struct BrushToolView: ToolView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24)
-                    .colorMultiply(.cyan)
+                    .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
-                    .fill(.cyan)
+                    .fill(selectedColor)
                     .frame(width: 20, height: 20)
                     .offset (x: 0, y: -5)
             }
@@ -114,6 +137,7 @@ struct BrushToolView: ToolView {
 
 struct NeonToolView: ToolView {
     @Binding var selectedDrawTool: Int?
+    @Binding var selectedColor: Color
     
     var body: some View {
         Button {
@@ -128,9 +152,9 @@ struct NeonToolView: ToolView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24)
-                    .colorMultiply(.cyan)
+                    .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
-                    .fill(.cyan)
+                    .fill(selectedColor)
                     .frame(width: 20, height: 20)
                     .offset (x: 0, y: -5)
             }
@@ -141,6 +165,7 @@ struct NeonToolView: ToolView {
 
 struct PencilToolView: ToolView {
     @Binding var selectedDrawTool: Int?
+    @Binding var selectedColor: Color
     
     var body: some View {
         Button {
@@ -155,9 +180,9 @@ struct PencilToolView: ToolView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24)
-                    .colorMultiply(.cyan)
+                    .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
-                    .fill(.cyan)
+                    .fill(selectedColor)
                     .frame(width: 20, height: 20)
                     .offset (x: 0, y: 0)
             }
