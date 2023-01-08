@@ -71,6 +71,24 @@ class ColorSet: ObservableObject {
         self.text = .black
     }
     
+    func current(_ toolType: ToolType, _ selectedDrawTool: Int?) -> Color {
+        if toolType == .text {
+            return text
+        }
+        switch selectedDrawTool {
+            case 0:
+                return pen
+            case 1:
+                return brush
+            case 2:
+                return neon
+            case 3:
+                return pencil
+            default:
+                return Color(cgColor: CGColor(gray: 0, alpha: 0))
+        }
+    }
+    
 }
 
 // MARK: - each tool view

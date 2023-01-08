@@ -108,7 +108,7 @@ struct EditorView: View {
                         selectedDrawTool: $selectedDrawTool,
                         canvasSize: $canvasSize,
                         drawnLines: $drawnLines,
-                        currentColor: getCurrentColorSetBinding()
+                        colorSet: colorSet
                     )
                 }
         }
@@ -184,9 +184,10 @@ struct EditorView: View {
             case 3:
                 return $colorSet.pencil
             default:
-                return Binding(get: {
-                    Color(cgColor: CGColor(gray: 0, alpha: 0))
-                }, set: { _ in })
+                return $colorSet.pen
+//                return Binding(get: {
+//                    Color(cgColor: CGColor(gray: 0, alpha: 0))
+//                }, set: { _ in })
         }
     }
     

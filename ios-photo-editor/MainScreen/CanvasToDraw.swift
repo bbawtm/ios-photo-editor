@@ -14,7 +14,7 @@ struct CanvasToDraw: View {
     @Binding var selectedDrawTool: Int?
     @Binding var canvasSize: CGSize?
     @Binding var drawnLines: [Line]
-    @Binding var currentColor: Color
+    @ObservedObject var colorSet: ColorSet
     
     var body: some View {
         Canvas { context, size in
@@ -29,9 +29,9 @@ struct CanvasToDraw: View {
                 DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onChanged { value in
                         let position = value.location
-
+                        
                         if value.translation == .zero {
-                            self.drawnLines.append(Line(points: [position], color: currentColor))
+                            self.drawnLines.append(Line(points: [position], color: self.colorSet.current(toolType, selectedDrawTool)))
                         } else {
                             guard let lastIdx = self.drawnLines.indices.last else { return }
 
