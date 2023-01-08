@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		940DAFC929587E3E00903DAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC729587E3E00903DAA /* README.md */; };
 		940DAFCA29587E3E00903DAA /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 940DAFC829587E3E00903DAA /* LICENSE.txt */; };
+		94535730296AB1D100EF472E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453572F296AB1D100EF472E /* UserData.swift */; };
+		94535733296AE3A200EF472E /* ViewConditionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94535732296AE3A200EF472E /* ViewConditionals.swift */; };
+		94535736296AE68300EF472E /* CanvasToDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94535735296AE68300EF472E /* CanvasToDraw.swift */; };
 		945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F47F7295CBA3B00D3D73D /* ToolViews.swift */; };
 		94632553295B763500F862F9 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94632552295B763500F862F9 /* EditorView.swift */; };
 		94D25B482958733F00405AD0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D25B472958733F00405AD0 /* App.swift */; };
@@ -44,6 +47,9 @@
 		940DAFC729587E3E00903DAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		940DAFC829587E3E00903DAA /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		9453572D2969BCAB00EF472E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9453572F296AB1D100EF472E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		94535732296AE3A200EF472E /* ViewConditionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConditionals.swift; sourceTree = "<group>"; };
+		94535735296AE68300EF472E /* CanvasToDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasToDraw.swift; sourceTree = "<group>"; };
 		945F47F7295CBA3B00D3D73D /* ToolViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViews.swift; sourceTree = "<group>"; };
 		94632552295B763500F862F9 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		94D25B442958733F00405AD0 /* ios-photo-editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-photo-editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,12 +100,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		94535731296AB1D600EF472E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9453572F296AB1D100EF472E /* UserData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		945F47F6295CBA0B00D3D73D /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				94535731296AB1D600EF472E /* Model */,
 				9453572A2966EA1000EF472E /* ViewModel */,
 				94632552295B763500F862F9 /* EditorView.swift */,
 				945F47F7295CBA3B00D3D73D /* ToolViews.swift */,
+				94535732296AE3A200EF472E /* ViewConditionals.swift */,
+				94535735296AE68300EF472E /* CanvasToDraw.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -309,8 +326,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94535736296AE68300EF472E /* CanvasToDraw.swift in Sources */,
+				94535733296AE3A200EF472E /* ViewConditionals.swift in Sources */,
 				945F47F8295CBA3B00D3D73D /* ToolViews.swift in Sources */,
 				94D25B512958734100405AD0 /* Persistence.swift in Sources */,
+				94535730296AB1D100EF472E /* UserData.swift in Sources */,
 				94F9C548295C7AA100B05F70 /* ZoomableView.swift in Sources */,
 				94D25B4A2958733F00405AD0 /* ContentView.swift in Sources */,
 				94D25B482958733F00405AD0 /* App.swift in Sources */,

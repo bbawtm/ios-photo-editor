@@ -10,38 +10,12 @@ import SwiftUI
 
 struct EditorView: View {
     
+    @EnvironmentObject var userData: UserData
     @StateObject private var colorSet = ColorSet(default: .cyan)
     @State private var toolType: ToolType = .draw
     @State private var selectedDrawTool: Int?
     @State private var canvasSize: CGSize?
     @State private var drawnLines: [Line] = []
-    
-    var canvasToDraw: some View {
-        Canvas { context, size in
-            self.canvasSize = size
-            for line in self.drawnLines {
-                var path = Path()
-                path.addLines(line.points)
-                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
-            }
-        }
-        .gesture(
-            DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                .onChanged { value in
-                    guard !(self.toolType == .draw && self.selectedDrawTool == nil) else { return }
-                    
-                    let position = value.location
-                    
-                    if value.translation == .zero {
-                        self.drawnLines.append(Line(points: [position], color: self.getCurrentColorSetBinding().wrappedValue))
-                    } else {
-                        guard let lastIdx = self.drawnLines.indices.last else { return }
-                        
-                        self.drawnLines[lastIdx].points.append(position)
-                    }
-                }
-        )
-    }
     
     var editorTools: some View {
         HStack {
@@ -123,41 +97,54 @@ struct EditorView: View {
         .padding(.trailing, 8)
     }
     
+    var drawableImage: some View {
+        Zoomable(zoomRange: userData.imageScreenScale...(userData.imageScreenScale * 3)) {
+            Image(uiImage: userData.image)
+                .resizable()
+                .scaledToFill()
+                .overlay {
+                    CanvasToDraw(
+                        toolType: $toolType,
+                        selectedDrawTool: $selectedDrawTool,
+                        canvasSize: $canvasSize,
+                        drawnLines: $drawnLines,
+                        currentColor: getCurrentColorSetBinding()
+                    )
+                }
+        }
+        .clipped()
+        .frame(maxWidth: UIScreen.main.bounds.size.width, maxHeight: UIScreen.main.bounds.size.height)
+        .ignoresSafeArea()
+    }
+        
     var body: some View {
         NavigationView {
-            Group {
-                ZoomableImageView()
-                    .overlay {
-                        canvasToDraw
+            drawableImage
+                .overlay {
+                    editorTools
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            _ = self.drawnLines.popLast()
+                        } label: {
+                            Image(systemName: "arrow.uturn.backward")
+                                .foregroundColor(.white)
+                        }
                     }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea()
-            .overlay {
-                editorTools
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        _ = self.drawnLines.popLast()
-                    } label: {
-                        Image(systemName: "arrow.uturn.backward")
-                            .foregroundColor(.white)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Clear all") {
+                            self.drawnLines = []
+                        }
+                        .foregroundColor(.white)
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Clear all") {
-                        self.drawnLines = []
-                    }
-                    .foregroundColor(.white)
-                }
-            }
         }
     }
     
     @MainActor
     private func saveImage() {
-        guard let originUIImage = UIImage(named: "ExampleMain1") else { return }
+        let originUIImage = userData.image
         let originSize = originUIImage.size
         
         let drawnLines = self.drawnLines                                                   // bug if delete this line

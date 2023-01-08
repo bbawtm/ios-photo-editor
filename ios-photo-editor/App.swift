@@ -17,6 +17,7 @@ struct ios_photo_editorApp: App {
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             EditorView()
                 .preferredColorScheme(.dark)
+                .environmentObject(UserData(image: UIImage(named: "ExampleMain1")!))
         }
     }
 }
