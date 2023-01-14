@@ -10,14 +10,18 @@ import SwiftUI
 @main
 struct ios_photo_editorApp: App {
     let persistenceController = PersistenceController.shared
+    @State var imageData: Data?
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            EditorView()
-                .preferredColorScheme(.dark)
-                .environmentObject(UserData(image: UIImage(named: "ExampleMain1")!))
+            if let imageData {
+                EditorView()
+                    .preferredColorScheme(.dark)
+                    .environmentObject(UserData(imageData: imageData))
+            } else {
+                PhotoSelectionView(imageData: $imageData)
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }

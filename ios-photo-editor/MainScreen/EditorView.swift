@@ -41,11 +41,12 @@ struct EditorView: View {
             VStack {
                 Spacer()
                 HStack {
-                    AllToolsView(toolType: $toolType, selectedDrawTool: $selectedDrawTool, colorSet: colorSet)
-                        .visibility(toolType == .draw)
-                    TextToolView()
-                        .visibility(toolType == .text)
-                        .padding(.bottom, 50)
+                    if toolType == .draw {
+                        AllToolsView(toolType: $toolType, selectedDrawTool: $selectedDrawTool, colorSet: colorSet)
+                    } else {
+                        TextToolView()
+                            .padding(.bottom, 50)
+                    }
                 }
                 .padding(.bottom, -15)
                 .padding(.top, 35)
@@ -184,76 +185,20 @@ struct EditorView: View {
             case 3:
                 return $colorSet.pencil
             default:
-                return $colorSet.pen
-//                return Binding(get: {
-//                    Color(cgColor: CGColor(gray: 0, alpha: 0))
-//                }, set: { _ in })
+                return Binding(get: {
+                    Color(cgColor: CGColor(gray: 0, alpha: 0))
+                }, set: { _ in })
         }
     }
     
 }
 
-struct EditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditorView()
-            .preferredColorScheme(.dark)
-    }
-}
-
 extension View {
-    
     public func addCircle(_ content: Color, width: CGFloat = 1, cornerRadius: CGFloat) -> some View {
         let roundedRect = Circle()
         return clipShape(roundedRect)
             .overlay(roundedRect.strokeBorder(content, lineWidth: width))
     }
-    
-    @ViewBuilder
-    func visibility(_ visibility: Bool) -> some View {
-        if visibility {
-            self
-        }
-    }
-    
-}
-
-struct Blur: UIViewRepresentable {
-    var style: UIBlurEffect.Style = .systemMaterial
-
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: style))
-    }
-
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: style)
-    }
-}
-
-struct BackdropView: UIViewRepresentable {
-
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView()
-        let blur = UIBlurEffect(style: .extraLight)
-        let animator = UIViewPropertyAnimator()
-        animator.addAnimations { view.effect = blur }
-        animator.fractionComplete = 0
-        animator.stopAnimation(true)
-        animator.finishAnimation(at: .start)
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) { }
-    
-}
-
-struct BackdropBlurView: View {
-    
-    let radius: CGFloat
-    
-    var body: some View {
-        BackdropView().blur(radius: radius)
-    }
-    
 }
 
 struct Line {
