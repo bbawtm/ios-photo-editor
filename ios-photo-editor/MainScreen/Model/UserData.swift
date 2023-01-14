@@ -9,7 +9,6 @@ import SwiftUI
 
 
 class UserData: ObservableObject {
-    
     let image: UIImage
     let imageScreenScale: Double
     
@@ -19,5 +18,4 @@ class UserData: ObservableObject {
         let heightScale = 1.0 * (UIScreen.main.bounds.size.height - 280) / self.image.size.height
         self.imageScreenScale = min(heightScale, widthScale)
     }
-    
 }

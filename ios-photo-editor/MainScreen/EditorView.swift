@@ -19,6 +19,7 @@ struct EditorView: View {
     @State private var canvasSize: CGSize? = nil
     @State private var drawnLines: [Line] = []
     @State private var presentExitAlert: Bool = false
+    @State private var presentSaveAlert: Bool = false
     
     init(imageData: Binding<Data?>) {
         self._imageData = imageData
@@ -104,13 +105,21 @@ struct EditorView: View {
                         .padding(.bottom, 10.0)
                 }
                 Button {
-                    // Save image action
-                    saveImage()
+                    presentSaveAlert = true
                 } label: {
                     Image("downloadToolBar")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30)
+                }
+                .confirmationDialog("Save image", isPresented: $presentSaveAlert) {
+                    Button("Save to Photos") {
+                        saveImage()
+                    }
+//                    Button("Share") {
+//
+//                    }
+                    Button("Cancel", role: .cancel) {}
                 }
             }
         }
@@ -165,6 +174,7 @@ struct EditorView: View {
     
     @MainActor
     private func saveImage() {
+        print("creating image")
         let originUIImage = userData.image
         let originSize = originUIImage.size
         
@@ -186,8 +196,7 @@ struct EditorView: View {
             canvasImage
         }
         let rendererCombined = ImageRenderer(content: combinedView)
-        guard let resultUiImage = rendererCombined.uiImage else { return }
-        
+        guard let resultUiImage = rendererCombined.uiImage else { fatalError("Cannot create image") }
         UIImageWriteToSavedPhotosAlbum(resultUiImage, nil, nil, nil)
     }
     

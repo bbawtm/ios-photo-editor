@@ -15,13 +15,27 @@ struct PhotoSelectionView: View {
     @State private var imageSelection: PhotosPickerItem?
     
     var body: some View {
-        PhotosPicker(selection: $imageSelection,
-                     matching: .images,
-                     photoLibrary: .shared()) {
-            Image(systemName: "pencil.circle.fill")
-                .symbolRenderingMode(.multicolor)
-                .font(.system(size: 30))
-                .foregroundColor(.accentColor)
+        Spacer()
+        Text("Photo Editor")
+            .font(.largeTitle)
+        Spacer()
+        Spacer()
+        PhotosPicker(
+            selection: $imageSelection,
+            matching: .images,
+            photoLibrary: .shared()
+        ) {
+            Text("Get started")
+                .foregroundColor(.white)
+                .font(.headline)
+                .padding(.top, 10)
+                .padding(.bottom, 10)
+                .padding(.leading, 20)
+                .padding(.trailing, 20)
+                .background {
+                    Rectangle()
+                }
+                .cornerRadius(100)
         }
         .buttonStyle(.borderless)
         .onChange(of: imageSelection) { newValue in
@@ -31,6 +45,7 @@ struct PhotoSelectionView: View {
                 }
             }
         }
+        .padding(.bottom, 100)
     }
     
 }
