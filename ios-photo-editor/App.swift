@@ -14,10 +14,9 @@ struct ios_photo_editorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if let imageData {
-                EditorView()
+            if imageData != nil {
+                EditorView(imageData: $imageData)
                     .preferredColorScheme(.dark)
-                    .environmentObject(UserData(imageData: imageData))
             } else {
                 PhotoSelectionView(imageData: $imageData)
                     .preferredColorScheme(.dark)

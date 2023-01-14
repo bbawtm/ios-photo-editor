@@ -10,12 +10,24 @@ import SwiftUI
 
 struct EditorView: View {
     
-    @EnvironmentObject var userData: UserData
+    @Binding var imageData: Data?
+    private let userData: UserData
+    
     @StateObject private var colorSet = ColorSet(default: .cyan)
     @State private var toolType: ToolType = .draw
-    @State private var selectedDrawTool: Int?
-    @State private var canvasSize: CGSize?
+    @State private var selectedDrawTool: Int? = nil
+    @State private var canvasSize: CGSize? = nil
     @State private var drawnLines: [Line] = []
+    @State private var presentExitAlert: Bool = false
+    
+    init(imageData: Binding<Data?>) {
+        self._imageData = imageData
+        if let data = imageData.wrappedValue, let img = UIImage(data: data) {
+            self.userData = UserData(image: img)
+        } else {
+            fatalError("UserData incorrect image data")
+        }
+    }
     
     var editorTools: some View {
         HStack {
@@ -26,17 +38,25 @@ struct EditorView: View {
                     .frame(width: 30)
                     .padding(.bottom, 10.0)
                 Button {
-                    // Cancel action
-                    selectedDrawTool = nil
+                    if toolType != .draw || selectedDrawTool == nil {
+                        // Exit window
+                        presentExitAlert = true
+                    } else {
+                        // Cancel action
+                        selectedDrawTool = nil
+                    }
                 } label: {
                     Image("cancelToolBar")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30)
-                        
                 }
-                .opacity(toolType == .draw && selectedDrawTool != nil ? 1 : 0.4)
-                .disabled(toolType != .draw || selectedDrawTool == nil)
+                .alert("Leave changes?", isPresented: $presentExitAlert) {
+                    Button("Leave", role: .destructive) {
+                        imageData = nil
+                    }
+                    Button("Stay", role: .cancel) {}
+                }
             }
             VStack {
                 Spacer()
