@@ -14,15 +14,19 @@ struct ios_photo_editorApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            if imageData != nil {
-            EditorView(imageData: Binding {
-                return UIImage(named: "ExampleMain1")?.pngData()
-            } set: {_, _ in})
-                    .preferredColorScheme(.dark)
-//            } else {
-//                PhotoSelectionView(imageData: $imageData)
+//          DEBUG CODE:
+//            EditorView(imageData: Binding {
+//                return UIImage(named: "ExampleMain1")?.pngData()
+//            } set: {_, _ in})
 //                    .preferredColorScheme(.dark)
-//            }
+            
+            if imageData != nil {
+                EditorView(imageData: $imageData)
+                    .preferredColorScheme(.dark)
+            } else {
+                PhotoSelectionView(imageData: $imageData)
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }
