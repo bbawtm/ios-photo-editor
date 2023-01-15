@@ -15,6 +15,7 @@ struct CanvasToDraw: View {
     @Binding var canvasSize: CGSize?
     @Binding var drawnLines: [Line]
     @ObservedObject var colorSet: ColorSet
+    @ObservedObject var widthSet: WidthSet
     
     var body: some View {
         Canvas { context, size in
@@ -22,7 +23,7 @@ struct CanvasToDraw: View {
             for line in self.drawnLines {
                 var path = Path()
                 path.addLines(line.points)
-                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: line.width, lineCap: .round, lineJoin: .round))
             }
         }.if(self.toolType != .draw || self.selectedDrawTool != nil) {
             $0.gesture(
@@ -31,7 +32,7 @@ struct CanvasToDraw: View {
                         let position = value.location
                         
                         if value.translation == .zero {
-                            self.drawnLines.append(Line(points: [position], color: self.colorSet.current(toolType, selectedDrawTool)))
+                            self.drawnLines.append(Line(points: [position], color: self.colorSet.current(toolType, selectedDrawTool), width: self.widthSet.current(toolType, selectedDrawTool) * 0.1))
                         } else {
                             guard let lastIdx = self.drawnLines.indices.last else { return }
 

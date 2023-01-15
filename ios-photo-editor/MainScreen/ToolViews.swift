@@ -15,19 +15,40 @@ struct AllToolsView: View {
     @Binding var toolType: ToolType
     @Binding var selectedDrawTool: Int?
     @ObservedObject var colorSet: ColorSet
+    @ObservedObject var widthSet: WidthSet
     
     var body: some View {
-        PenToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.pen)
-            .padding(.trailing)
-        BrushToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.brush)
-            .padding(.trailing)
-        NeonToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.neon)
-            .padding(.trailing)
-        PencilToolView(selectedDrawTool: $selectedDrawTool, selectedColor: $colorSet.pencil)
-            .padding(.trailing)
-        LassoToolView(selectedDrawTool: $selectedDrawTool)
-            .padding(.trailing)
-        EraserToolView(selectedDrawTool: $selectedDrawTool)
+        PenToolView(
+            selectedDrawTool: $selectedDrawTool,
+            selectedColor: $colorSet.pen,
+            selectedWidth: $widthSet.pen
+        )
+        .padding(.trailing)
+        BrushToolView(
+            selectedDrawTool: $selectedDrawTool,
+            selectedColor: $colorSet.brush,
+            selectedWidth: $widthSet.brush
+        )
+        .padding(.trailing)
+        NeonToolView(
+            selectedDrawTool: $selectedDrawTool,
+            selectedColor: $colorSet.neon,
+            selectedWidth: $widthSet.neon
+        )
+        .padding(.trailing)
+        PencilToolView(
+            selectedDrawTool: $selectedDrawTool,
+            selectedColor: $colorSet.pencil,
+            selectedWidth: $widthSet.pencil
+        )
+        .padding(.trailing)
+        LassoToolView(
+            selectedDrawTool: $selectedDrawTool
+        )
+        .padding(.trailing)
+        EraserToolView(
+            selectedDrawTool: $selectedDrawTool
+        )
     }
 }
 
@@ -91,6 +112,45 @@ class ColorSet: ObservableObject {
     
 }
 
+class WidthSet: ObservableObject {
+    
+    @Published var pen: CGFloat
+    @Published var brush: CGFloat
+    @Published var neon: CGFloat
+    @Published var pencil: CGFloat
+    @Published var text: CGFloat
+    
+    let minLineWidth: CGFloat = 20
+    let maxLineWidth: CGFloat = 200
+    
+    init(default c: CGFloat) {
+        self.pen = c
+        self.brush = c
+        self.neon = c
+        self.pencil = c
+        self.text = 14
+    }
+    
+    func current(_ toolType: ToolType, _ selectedDrawTool: Int?) -> CGFloat {
+        if toolType == .text {
+            return text
+        }
+        switch selectedDrawTool {
+            case 0:
+                return pen
+            case 1:
+                return brush
+            case 2:
+                return neon
+            case 3:
+                return pencil
+            default:
+                return 15
+        }
+    }
+    
+}
+
 // MARK: - each tool view
 
 protocol ToolView: View {
@@ -100,6 +160,7 @@ protocol ToolView: View {
 struct PenToolView: ToolView {
     @Binding var selectedDrawTool: Int?
     @Binding var selectedColor: Color
+    @Binding var selectedWidth: CGFloat
     
     var body: some View {
         Button {
@@ -117,8 +178,8 @@ struct PenToolView: ToolView {
                     .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(selectedColor)
-                    .frame(width: 20, height: 20)
-                    .offset (x: 0, y: 6)
+                    .frame(width: 20, height: 0.1 * selectedWidth)
+                    .offset (x: 0, y: 6 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
             .padding(.top, selectedDrawTool == 0 ? -45 : 0)
         }
@@ -128,6 +189,7 @@ struct PenToolView: ToolView {
 struct BrushToolView: ToolView {
     @Binding var selectedDrawTool: Int?
     @Binding var selectedColor: Color
+    @Binding var selectedWidth: CGFloat
     
     var body: some View {
         Button {
@@ -145,8 +207,8 @@ struct BrushToolView: ToolView {
                     .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(selectedColor)
-                    .frame(width: 20, height: 20)
-                    .offset (x: 0, y: -5)
+                    .frame(width: 20, height: 0.1 * selectedWidth)
+                    .offset (x: 0, y: -5 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
             .padding(.top, selectedDrawTool == 1 ? -45 : 0)
         }
@@ -156,6 +218,7 @@ struct BrushToolView: ToolView {
 struct NeonToolView: ToolView {
     @Binding var selectedDrawTool: Int?
     @Binding var selectedColor: Color
+    @Binding var selectedWidth: CGFloat
     
     var body: some View {
         Button {
@@ -173,8 +236,8 @@ struct NeonToolView: ToolView {
                     .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(selectedColor)
-                    .frame(width: 20, height: 20)
-                    .offset (x: 0, y: -5)
+                    .frame(width: 20, height: 0.1 * selectedWidth)
+                    .offset (x: 0, y: -5 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
             .padding(.top, selectedDrawTool == 2 ? -45 : 0)
         }
@@ -184,6 +247,7 @@ struct NeonToolView: ToolView {
 struct PencilToolView: ToolView {
     @Binding var selectedDrawTool: Int?
     @Binding var selectedColor: Color
+    @Binding var selectedWidth: CGFloat
     
     var body: some View {
         Button {
@@ -201,8 +265,8 @@ struct PencilToolView: ToolView {
                     .colorMultiply(selectedColor)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(selectedColor)
-                    .frame(width: 20, height: 20)
-                    .offset (x: 0, y: 0)
+                    .frame(width: 20, height: 0.1 * selectedWidth)
+                    .offset (x: 0, y: -(20.0 - 0.1 * selectedWidth) / 2.0)
             }
             .padding(.top, selectedDrawTool == 3 ? -45 : 0)
         }

@@ -14,12 +14,14 @@ struct EditorView: View {
     private let userData: UserData
     
     @StateObject private var colorSet = ColorSet(default: .cyan)
+    @StateObject private var widthSet = WidthSet(default: 20)
     @State private var toolType: ToolType = .draw
     @State private var selectedDrawTool: Int? = nil
     @State private var canvasSize: CGSize? = nil
     @State private var drawnLines: [Line] = []
     @State private var presentExitAlert: Bool = false
     @State private var presentSaveAlert: Bool = false
+    @State private var showToolSettings: Bool = false
     
     init(imageData: Binding<Data?>) {
         self._imageData = imageData
@@ -63,7 +65,7 @@ struct EditorView: View {
                 Spacer()
                 HStack {
                     if toolType == .draw {
-                        AllToolsView(toolType: $toolType, selectedDrawTool: $selectedDrawTool, colorSet: colorSet)
+                        AllToolsView(toolType: $toolType, selectedDrawTool: $selectedDrawTool, colorSet: colorSet, widthSet: widthSet)
                     } else {
                         TextToolView()
                             .padding(.bottom, 50)
@@ -94,7 +96,7 @@ struct EditorView: View {
             VStack {
                 Spacer()
                 Button {
-                    print("Show tool info action")
+                    showToolSettings = true
                 } label: {
                     Image("addToolBar")
                         .resizable()
@@ -127,6 +129,42 @@ struct EditorView: View {
         .padding(.trailing, 8)
     }
     
+    var toolWidthSelecting: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Slider(value: getCurrentWidthSetBinding(), in: widthSet.minLineWidth...widthSet.maxLineWidth)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: 150)
+            .background {
+                Rectangle()
+                    .foregroundColor(Color(white: 0.15))
+            }
+            .cornerRadius(20)
+            .overlay {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button {
+                            showToolSettings = false
+                        } label: {
+                            Image(systemName: "xmark.circle")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                                .padding(.trailing, 12)
+                                .padding(.top, 12)
+                        }
+
+                    }
+                    Spacer()
+                }
+            }
+        }
+    }
+    
     var drawableImage: some View {
         Zoomable(zoomRange: userData.imageScreenScale...(userData.imageScreenScale * 3)) {
             Image(uiImage: userData.image)
@@ -138,7 +176,8 @@ struct EditorView: View {
                         selectedDrawTool: $selectedDrawTool,
                         canvasSize: $canvasSize,
                         drawnLines: $drawnLines,
-                        colorSet: colorSet
+                        colorSet: colorSet,
+                        widthSet: widthSet
                     )
                 }
         }
@@ -152,6 +191,11 @@ struct EditorView: View {
             drawableImage
                 .overlay {
                     editorTools
+                        .overlay {
+                            if showToolSettings {
+                                toolWidthSelecting
+                            }
+                        }
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -174,7 +218,6 @@ struct EditorView: View {
     
     @MainActor
     private func saveImage() {
-        print("creating image")
         let originUIImage = userData.image
         let originSize = originUIImage.size
         
@@ -188,7 +231,7 @@ struct EditorView: View {
                     element.applying(CGAffineTransform(scaleX: scale, y: scale))
                 }
                 path.addLines(affineStretched)
-                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: 5 * scale, lineCap: .round, lineJoin: .round))
+                context.stroke(path, with: .color(line.color), style: StrokeStyle(lineWidth: line.width * scale, lineCap: .round, lineJoin: .round))
             }
         }
         let combinedView = ZStack {
@@ -220,6 +263,24 @@ struct EditorView: View {
         }
     }
     
+    private func getCurrentWidthSetBinding() -> Binding<CGFloat> {
+        if toolType == .text {
+            return $widthSet.text
+        }
+        switch selectedDrawTool {
+            case 0:
+                return $widthSet.pen
+            case 1:
+                return $widthSet.brush
+            case 2:
+                return $widthSet.neon
+            case 3:
+                return $widthSet.pencil
+            default:
+                return Binding(get: { return 0 }, set: { _ in })
+        }
+    }
+    
 }
 
 extension View {
@@ -233,4 +294,5 @@ extension View {
 struct Line {
     var points: [CGPoint]
     var color: Color
+    var width: CGFloat
 }
