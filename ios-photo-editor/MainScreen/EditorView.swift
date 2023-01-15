@@ -36,10 +36,12 @@ struct EditorView: View {
         HStack {
             VStack {
                 Spacer()
-                ColorPicker("Choose color", selection: getCurrentColorSetBinding())
-                    .labelsHidden()
-                    .frame(width: 30)
-                    .padding(.bottom, 10.0)
+                if 0 <= (selectedDrawTool ?? -1) && (selectedDrawTool ?? -1) <= 3 || toolType == .text {
+                    ColorPicker("Choose color", selection: getCurrentColorSetBinding())
+                        .labelsHidden()
+                        .frame(width: 30)
+                        .padding(.bottom, 10.0)
+                }
                 Button {
                     if toolType != .draw || selectedDrawTool == nil {
                         // Exit window
@@ -95,18 +97,19 @@ struct EditorView: View {
             }
             VStack {
                 Spacer()
-                Button {
-                    showToolSettings = true
-                } label: {
-                    Image("addToolBar")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30)
-                        .background(Blur(style: .systemUltraThinMaterial))
-                        .cornerRadius(50)
-                        .padding(.bottom, 10.0)
+                if toolType == .draw && 0 <= (selectedDrawTool ?? -1) && (selectedDrawTool ?? -1) <= 3 {
+                    Button {
+                        showToolSettings = true
+                    } label: {
+                        Image("addToolBar")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30)
+                            .background(Blur(style: .systemUltraThinMaterial))
+                            .cornerRadius(50)
+                            .padding(.bottom, 10.0)
+                    }
                 }
-                .disabled(!(0 <= (selectedDrawTool ?? -1) && (selectedDrawTool ?? -1) <= 3))
                 Button {
                     presentSaveAlert = true
                 } label: {
