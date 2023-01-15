@@ -106,6 +106,7 @@ struct EditorView: View {
                         .cornerRadius(50)
                         .padding(.bottom, 10.0)
                 }
+                .disabled(!(0 <= (selectedDrawTool ?? -1) && (selectedDrawTool ?? -1) <= 3))
                 Button {
                     presentSaveAlert = true
                 } label: {
@@ -133,9 +134,39 @@ struct EditorView: View {
         VStack {
             Spacer()
             HStack {
-                Spacer()
+                Spacer().frame(width: 30)
+                switch (selectedDrawTool) {
+                    case 0:
+                        PenToolView(
+                            selectedDrawTool: $selectedDrawTool,
+                            selectedColor: $colorSet.pen,
+                            selectedWidth: $widthSet.pen
+                        )
+                    case 1:
+                        BrushToolView(
+                            selectedDrawTool: $selectedDrawTool,
+                            selectedColor: $colorSet.brush,
+                            selectedWidth: $widthSet.brush
+                        )
+                    case 2:
+                        NeonToolView(
+                            selectedDrawTool: $selectedDrawTool,
+                            selectedColor: $colorSet.neon,
+                            selectedWidth: $widthSet.neon
+                        )
+                    case 3:
+                        PencilToolView(
+                            selectedDrawTool: $selectedDrawTool,
+                            selectedColor: $colorSet.pencil,
+                            selectedWidth: $widthSet.pencil
+                        )
+                    default:
+                        Spacer().frame(width: 24)
+                }
                 Slider(value: getCurrentWidthSetBinding(), in: widthSet.minLineWidth...widthSet.maxLineWidth)
-                Spacer()
+                    .padding(.leading, 30)
+                    .padding(.trailing, 30)
+                    .padding(.top, 20)
             }
             .frame(maxWidth: .infinity, maxHeight: 150)
             .background {
@@ -150,9 +181,8 @@ struct EditorView: View {
                         Button {
                             showToolSettings = false
                         } label: {
-                            Image(systemName: "xmark.circle")
+                            Image("cancelToolBar")
                                 .resizable()
-                                .foregroundColor(.white)
                                 .frame(width: 30, height: 30)
                                 .padding(.trailing, 12)
                                 .padding(.top, 12)

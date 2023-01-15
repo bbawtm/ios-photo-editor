@@ -23,32 +23,38 @@ struct AllToolsView: View {
             selectedColor: $colorSet.pen,
             selectedWidth: $widthSet.pen
         )
+        .padding(.top, selectedDrawTool == 0 ? -45 : 0)
         .padding(.trailing)
         BrushToolView(
             selectedDrawTool: $selectedDrawTool,
             selectedColor: $colorSet.brush,
             selectedWidth: $widthSet.brush
         )
+        .padding(.top, selectedDrawTool == 1 ? -45 : 0)
         .padding(.trailing)
         NeonToolView(
             selectedDrawTool: $selectedDrawTool,
             selectedColor: $colorSet.neon,
             selectedWidth: $widthSet.neon
         )
+        .padding(.top, selectedDrawTool == 2 ? -45 : 0)
         .padding(.trailing)
         PencilToolView(
             selectedDrawTool: $selectedDrawTool,
             selectedColor: $colorSet.pencil,
             selectedWidth: $widthSet.pencil
         )
+        .padding(.top, selectedDrawTool == 3 ? -45 : 0)
         .padding(.trailing)
         LassoToolView(
             selectedDrawTool: $selectedDrawTool
         )
+        .padding(.top, selectedDrawTool == 4 ? -45 : 0)
         .padding(.trailing)
         EraserToolView(
             selectedDrawTool: $selectedDrawTool
         )
+        .padding(.top, selectedDrawTool == 5 ? -45 : 0)
     }
 }
 
@@ -181,7 +187,6 @@ struct PenToolView: ToolView {
                     .frame(width: 20, height: 0.1 * selectedWidth)
                     .offset (x: 0, y: 6 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
-            .padding(.top, selectedDrawTool == 0 ? -45 : 0)
         }
     }
 }
@@ -210,7 +215,6 @@ struct BrushToolView: ToolView {
                     .frame(width: 20, height: 0.1 * selectedWidth)
                     .offset (x: 0, y: -5 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
-            .padding(.top, selectedDrawTool == 1 ? -45 : 0)
         }
     }
 }
@@ -239,7 +243,6 @@ struct NeonToolView: ToolView {
                     .frame(width: 20, height: 0.1 * selectedWidth)
                     .offset (x: 0, y: -5 - (20.0 - 0.1 * selectedWidth) / 2.0)
             }
-            .padding(.top, selectedDrawTool == 2 ? -45 : 0)
         }
     }
 }
@@ -268,7 +271,6 @@ struct PencilToolView: ToolView {
                     .frame(width: 20, height: 0.1 * selectedWidth)
                     .offset (x: 0, y: -(20.0 - 0.1 * selectedWidth) / 2.0)
             }
-            .padding(.top, selectedDrawTool == 3 ? -45 : 0)
         }
     }
 }
@@ -286,7 +288,6 @@ struct LassoToolView: ToolView {
                     .scaledToFit()
                     .frame(width: 24)
             }
-            .padding(.top, selectedDrawTool == 4 ? -45 : 0)
         }
     }
 }
@@ -304,7 +305,6 @@ struct EraserToolView: ToolView {
                     .scaledToFit()
                     .frame(width: 24)
             }
-            .padding(.top, selectedDrawTool == 5 ? -45 : 0)
         }
     }
 }
