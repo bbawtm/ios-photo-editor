@@ -40,7 +40,7 @@ struct PhotoSelectionView: View {
         .buttonStyle(.borderless)
         .onChange(of: imageSelection) { newValue in
             Task {
-                if let data = try? await newValue?.loadTransferable(type: Data.self) {
+                if let data = try? await newValue?.loadTransferable(type: Data.self) {  // TODO: Large photos error
                     imageData = data
                 }
             }
